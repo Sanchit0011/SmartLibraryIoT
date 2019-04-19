@@ -1,11 +1,14 @@
+# Imported the necessary modules
 import sys
 import sqlite3
 import os
 import re
 
 
+# Defined the loginMenu class
 class loginMenu:
 
+    # Function to establish database connection
     def create_conn(self):
         path1 = os.path.realpath(__file__)
         path2 = os.path.basename(__file__)
@@ -14,9 +17,12 @@ class loginMenu:
         conn = sqlite3.connect(rel_path + 'PIoT_db2.db')
         return(conn)
 
+    # Function to display user login menu and
+    # perform action based on user choice
     def createloginMenu(self):
 
         while(1):
+            # Displaying user login menu
             print()
             print('Please select the option you want to proceed with:')
             print()
@@ -25,16 +31,16 @@ class loginMenu:
             print('3. exit')
             print()
 
+            # Took user option as input
             options = input()
             if(options != '1' and options != '2' and options != '3'):
                 print()
                 print('Please enter 1 or 2 as your choices')
 
-            elif(options == '3'):
-                sys.exit(0)
-
+            # If option 1 then register new user
             elif(options == '1'):
 
+                # Created userdetails table in database
                 conn = self.create_conn()
                 cur = conn.cursor()
                 conn.execute('''CREATE TABLE IF NOT EXISTS USERDETAILS
@@ -45,6 +51,7 @@ class loginMenu:
                 EMAIL TEXT NOT NULL
                 );''')
 
+                # Input and validate username
                 flag = True
                 while(flag):
                     print()
@@ -58,6 +65,7 @@ class loginMenu:
                     else:
                         flag = False
 
+                # Input and validate first name
                 while(flag is False):
                     print()
                     firstName = input('Enter first name: ')
@@ -68,6 +76,7 @@ class loginMenu:
                     else:
                         flag = True
 
+                # Input and validate last name
                 while(flag):
                     print()
                     lastName = input('Enter last name: ')
@@ -78,6 +87,7 @@ class loginMenu:
                     else:
                         flag = False
 
+                # Input and validate e-mail
                 while(flag is False):
                     print()
                     email = input('Enter e-mail: ')
@@ -95,6 +105,7 @@ class loginMenu:
                     else:
                         flag = True
 
+                # Input and validate password
                 while(flag):
                     print()
                     passw = input('Enter password: ')
@@ -109,6 +120,7 @@ class loginMenu:
                         print()
                         print(errorstr)
                     else:
+                        # If all details valid then insert into table
                         conn.execute('''INSERT INTO USERDETAILS
                         (USERID, PASSWORD,
                         FIRSTNAME,
@@ -120,5 +132,13 @@ class loginMenu:
                         conn.close()
                         break
 
+            # If option 2 then log in to system
+            # elif(options == '2'):
+
+            # If option 3 then exit system
+            elif(options == '3'):
+                sys.exit(0)
+
+# Created loginMenu object and called createloginMenu()
 lm = loginMenu()
 lm.createloginMenu()
