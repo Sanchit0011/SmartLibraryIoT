@@ -62,6 +62,9 @@ class loginMenu:
                     if len(data) >= 1:
                         print()
                         print('Username already exists')
+                    elif(len(username) is 0):
+                        print()
+                        print('Please enter Username in correct format')
                     else:
                         flag = False
 
@@ -70,7 +73,7 @@ class loginMenu:
                     print()
                     firstName = input('Enter first name: ')
                     match = bool(re.match('^[a-zA-Z\s]*$', firstName))
-                    if(match is False):
+                    if(match is False or len(firstName) is 0):
                         print()
                         print('Please enter first name in correct format')
                     else:
@@ -81,7 +84,7 @@ class loginMenu:
                     print()
                     lastName = input('Enter last name: ')
                     match = bool(re.match('^[a-zA-Z\s]*$', lastName))
-                    if(match is False):
+                    if(match is False or len(lastName) is 0):
                         print()
                         print('Please enter last name in correct format')
                     else:
