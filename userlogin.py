@@ -102,7 +102,7 @@ class loginMenu:
                     cur.execute('''SELECT EMAIL from USERDETAILS
                     where EMAIL=?''', (email,))
                     data = cur.fetchall()
-                    if(match is False or or len(firstName) is 0):
+                    if(match is False or len(firstName) is 0):
                         print()
                         print('Please enter e-mail in correct format')
 
