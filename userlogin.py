@@ -9,8 +9,8 @@ from login_client import login
 from server import server
 
 
-# Defined the loginMenu class
-class loginMenu:
+# Defined the userlogin class
+class userlogin:
 
     # Function to establish database connection
     def create_conn(self):
@@ -198,5 +198,5 @@ class loginMenu:
                 sys.exit(0)
 
 # Created loginMenu object and called createloginMenu()
-lm = loginMenu()
-lm.createloginMenu()
+ul = userlogin()
+ul.createloginMenu()
