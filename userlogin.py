@@ -7,5 +7,5 @@ import socket
 import json
 
 
-# Defined the loginMenu class
-class loginMenu:
+# Defined the userlogin class
+class userlogin:
