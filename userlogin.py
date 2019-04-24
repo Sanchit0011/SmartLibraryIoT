@@ -10,8 +10,18 @@ import json
 # Defined the userlogin class
 class userlogin:
 
+    """[The userlogin class is used to display the login menu for users who
+    want to access the library system.
+
+    It allows users to register, log in to the system or exit the menu based
+    on the option they select.]"""
+
     # Function to establish database connection
     def create_conn(self):
+
+        """[The create_conn function establishes a connection to the database file,
+        which in this case is PIoT_db2.db.]"""
+
         path1 = os.path.realpath(__file__)
         path2 = os.path.basename(__file__)
         rel_path = path1.replace(path2, "")
@@ -23,7 +33,21 @@ class userlogin:
     # perform action based on user choice
     def createloginMenu(self):
 
+        """[The createloginMenu function is used to display the login menu for users
+        who want to access the library system. It gives users the option to
+        register, log in to the system or exit the menu.
+
+        If users choose to register, they will be asked to fill in a valid
+        username, firstname, lastname, email and password to create an account.
+
+        If users choose to log in, they will be asked to enter their username
+        and password in order to access the system. Access will only be
+        granted if username and password are correct.
+
+        If users choose to exit, they will exit the system.]"""
+
         while(1):
+
             # Displaying user login menu
             print()
             print('Please select the option you want to proceed with:')
