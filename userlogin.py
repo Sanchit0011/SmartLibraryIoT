@@ -42,7 +42,8 @@ class userlogin:
 
         If users choose to log in, they will be asked to enter their username
         and password in order to access the system. Access will only be
-        granted if username and password are correct.
+        granted if username and password are correct. If login is successful,
+        a success message along with the username is sent to the master pi.
 
         If users choose to exit, they will exit the system.]"""
 
