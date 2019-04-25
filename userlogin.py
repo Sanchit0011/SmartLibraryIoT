@@ -10,17 +10,17 @@ import json
 # Defined the userlogin class
 class userlogin:
 
-    """[The userlogin class is used to display the login menu for users who
+    """The userlogin class is used to display the login menu for users who
     want to access the library system.
 
     It allows users to register, log in to the system or exit the menu based
-    on the option they select.]"""
+    on the option they select."""
 
     # Function to establish database connection
     def create_conn(self):
 
-        """[The create_conn function establishes a connection to the database file,
-        which in this case is PIoT_db2.db.]"""
+        """The create_conn function establishes a connection to the database file,
+        which in this case is PIoT_db2.db."""
 
         path1 = os.path.realpath(__file__)
         path2 = os.path.basename(__file__)
@@ -33,7 +33,7 @@ class userlogin:
     # perform action based on user choice
     def createloginMenu(self):
 
-        """[The createloginMenu function is used to display the login menu for users
+        """The createloginMenu function is used to display the login menu for users
         who want to access the library system. It gives users the option to
         register, log in to the system or exit the menu.
 
@@ -45,7 +45,7 @@ class userlogin:
         granted if username and password are correct. If login is successful,
         a success message along with the username is sent to the master pi.
 
-        If users choose to exit, they will exit the system.]"""
+        If users choose to exit, they will exit the system."""
 
         while(1):
 
@@ -82,14 +82,14 @@ class userlogin:
                 flag = True
                 while(flag):
                     print()
-                    username = input('Enter username: ')
+                    userid = input('Enter username: ')
                     cur.execute('''SELECT USERID from USERDETAILS
-                    where USERID=?''', (username,))
+                    where USERID=?''', (userid,))
                     data = cur.fetchall()
                     if len(data) >= 1:
                         print()
                         print('Username already exists')
-                    elif(len(username) is 0):
+                    elif(len(userid) is 0):
                         print()
                         print('Please enter Username in correct format')
                     else:
@@ -157,7 +157,7 @@ class userlogin:
                         LASTNAME, EMAIL) \
                             VALUES(?, ?, ?,
                             ?, ?);
-                            ''', (username, passw, firstName, lastName, email))
+                            ''', (userid, passw, firstName, lastName, email))
                         conn.commit()
                         conn.close()
                         break
@@ -168,14 +168,18 @@ class userlogin:
                 # Create connection to db
                 conn = self.create_conn()
                 cur = conn.cursor()
+                cur2 = conn.cursor()
                 print()
 
                 # Input username and password
-                uname = input('Enter username: ')
+                uid = input('Enter username: ')
                 passw = input('Enter password: ')
                 cur.execute('''SELECT userid,password from USERDETAILS
-                where userid = ? and password = ?''', (uname, passw,))
+                where userid = ? and password = ?''', (uid, passw,))
                 credentials = cur.fetchall()
+                email = cur2.execute('''SELECT email from USERDETAILS
+                where userid = ?''', (uid,))
+                email = cur2.fetchall()
 
                 # If username and password exist, run client and server code
                 if(len(credentials) >= 1):
@@ -190,7 +194,7 @@ class userlogin:
                     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
                     s.connect(ADDRESS)
-                    msgdict = {"username": uname, "status": 'success'}
+                    msgdict = {"username": uid, "email": email[0][0], "status": 'success'}
                     msg = json.dumps(msgdict)
                     s.sendall(msg.encode())
 
