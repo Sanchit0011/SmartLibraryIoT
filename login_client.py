@@ -9,9 +9,9 @@ class client():
         HOST = ip
         PORT = 65000
         ADDRESS = (HOST, PORT)
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            s.connect(ADDRESS)
-            msg = "killsrv"
-            s.sendall(msg.encode())
-            s.close()
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        s.connect(ADDRESS)
+        msg = "killsrv"
+        s.sendall(msg.encode())
+        s.close()

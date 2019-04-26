@@ -1,6 +1,7 @@
 import socket
 import json
 from login_client import client
+from psql import dbCon
 
 
 class server():
@@ -39,13 +40,21 @@ class server():
 
                 elif(opt == '1'):
                     print("Enter book name to search")
-                    bookNameToSearch = input()
+                    bookTitle = input()
+                    q = ("""
+                    SELECT bookid, title, author, publisheddate
+                    FROM book
+                    WHERE title like %s """)
+                    rows = dbCon().selectQ(q, "%"+bookTitle+"%")
+                    print("| Bookid | Title | Author | Published Date |")
+                    for r in rows:
+                        print(str(r[0])+" | "+r[1]+" | "+r[2]+" | "+str(r[3]))
                 elif(opt == '2'):
                     print("Enter Book ID to borrow")
-                    bookNameToBorrow = input()
+                    bookTitle = input()
                 elif(opt == '3'):
                     print("Enter Book ID to return")
-                    bookNameToReturn = input()
+                    bookTitle = input()
                 elif(opt == '4'):
                     # send message to server for logout
                     client().clPost(addr[0])
