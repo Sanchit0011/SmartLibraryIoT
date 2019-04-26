@@ -1,10 +1,6 @@
-# socket progrem test
-#  create a socket object using socket.socket()
-# for TCP pecify the socket type as socket.SOCK_STREAM. 
-# User Datagram Protocol (UDP) sockets created with socket.SOCK_DGRAM
-#  AF_INET is the Internet address family for IPv4
-# Port to listen on (non-privileged ports are > 1023)
-# listen() has a backlog parameter. It specifies the number of unaccepted connections that 
+
+# AF_INET is the Internet address family for IPv4
+
 
 import socket
 import json
@@ -14,8 +10,8 @@ class server():
 
     def servListen(self):
         HOST = ""
-        PORT = 65000
-        ADDRESS = (HOST, PORT)
+        PORT = 65000        # Port to listen on (non-privileged ports are > 1023)
+        ADDRESS = (HOST, PORT)          ##  create a socket object using socket.socket(),socket.SOCK_STREAM for TCP
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.bind(ADDRESS)
             s.listen()
