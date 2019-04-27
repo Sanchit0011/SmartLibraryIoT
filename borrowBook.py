@@ -25,8 +25,8 @@ class borrow():
         qBrw = (
             """ INSERT INTO bookborrowed (bookborrowedid, lmsuserid, bookid,
              status, borroweddate, returneddate)
-            VALUES (default, %s , %s ,'borrowed', 
-            current_date, current_date + INTERVAL '7' DAY)""", (self.username, self.bookid))
+            VALUES (default, ?, ?,'borrowed', 
+            current_date, current_date + INTERVAL '7' DAY)""")
 
         rows = dbCon().selectQ(q, self.username)
         print(rows)
@@ -50,7 +50,7 @@ class borrow():
             else:
                 # borrow book since this book was never borrowed or
                 # returned,borrow book
-                dbCon().insUpDel(qBrw)
+                dbCon().insUpDel(qBrw, self.username, self.bookid)
                 print("Book borrow sucessfull")
 
         #     p

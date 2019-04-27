@@ -37,7 +37,7 @@ class dbCon():
         self.closeCon(conn)
         return rows
 
-    def insUpDel(self, qs):
+    def insUpDel(self, qs, *argv):
         """Def to execute insert, update or delete queries
 
         Arguments:
