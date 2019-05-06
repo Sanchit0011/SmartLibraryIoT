@@ -48,7 +48,7 @@ class dbCon():
         """
         conn = self.createCon()
         cur = conn.cursor()
-        cur.execute(qs)
+        cur.execute(qs, argv)
         conn.commit()
         count = cur.rowcount
         self.closeCon(conn)

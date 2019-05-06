@@ -24,8 +24,8 @@ class borrow():
 
         qBrw = (
             """ INSERT INTO bookborrowed (bookborrowedid, lmsuserid, bookid,
-             status, borroweddate, returneddate)
-            VALUES (default, ?, ?,'borrowed', 
+            status, borroweddate, returneddate)
+            VALUES (default, %s, %s, 'borrowed',
             current_date, current_date + INTERVAL '7' DAY)""")
 
         rows = dbCon().selectQ(q, self.username)
@@ -56,5 +56,5 @@ class borrow():
         #     p
 
 
-p = borrow("kashif1", 324)
+p = borrow("kashif1", 432)
 p.bkcheckout()
