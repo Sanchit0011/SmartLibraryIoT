@@ -6,15 +6,14 @@ from psql import dbCon
 
 
 class borrow():
-   """[summary]
-   """
 
     def __init__(self, username, bookid):
         """Borrow class will use username and bookid to execute its methods
         
         Arguments:
             username {String} -- username of the user
-            bookid {String} -- Unique book id of the book which is desired for borrowing
+            bookid {String} -- Unique book id of the book 
+            which is desired for borrowing
         """
         self.uname = username
         self.bkid = bookid
