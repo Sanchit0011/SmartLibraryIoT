@@ -129,7 +129,6 @@ class userlogin:
                     if(match is False or len(firstName) is 0):
                         print()
                         print('Please enter e-mail in correct format')
-
                     elif(len(data) >= 1):
                         print()
                         print('This e-mail has already been registered')
