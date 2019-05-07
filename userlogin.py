@@ -5,6 +5,7 @@ import os
 import re
 import socket
 import json
+from passlib.hash import sha256_crypt
 
 
 # Defined the userlogin class
@@ -150,6 +151,10 @@ class userlogin:
                         print()
                         print(errorstr)
                     else:
+                        
+                        # Encrypt the password
+                        encryptedpassw = sha256_crypt.hash(passw)
+                       
                         # If all details valid then insert into table
                         conn.execute('''INSERT INTO USERDETAILS
                         (USERID, PASSWORD,
@@ -157,7 +162,7 @@ class userlogin:
                         LASTNAME, EMAIL) \
                             VALUES(?, ?, ?,
                             ?, ?);
-                            ''', (userid, passw, firstName, lastName, email))
+                            ''', (userid, encryptedpassw, firstName, lastName, email))
                         conn.commit()
                         conn.close()
                         break
@@ -174,51 +179,65 @@ class userlogin:
                 # Input username and password
                 uid = input('Enter username: ')
                 passw = input('Enter password: ')
-                cur.execute('''SELECT userid,password from USERDETAILS
-                where userid = ? and password = ?''', (uid, passw,))
+                cur.execute('''SELECT password from USERDETAILS
+                where userid = ?''', (uid,))
                 credentials = cur.fetchall()
                 email = cur2.execute('''SELECT email from USERDETAILS
                 where userid = ?''', (uid,))
                 email = cur2.fetchall()
 
-                # If username and password exist, run client and server code
+                # Checking if username exists in database
                 if(len(credentials) >= 1):
-                    print()
+                    
+                    for row in credentials:
+                        
+                        # Verifying that encryption of password is same as value in database 
+                        if(sha256_crypt.verify(passw, row[0])):
+                            print()
 
-                    # Client code to send login success message to master pi
-                    HOST = input("input server ip ")
-                    print()
-                    print("Login successful!")
-                    PORT = 65000
-                    ADDRESS = (HOST, PORT)
-                    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-                    s.connect(ADDRESS)
-                    msgdict = {"username": uid, "email": email[0][0], "status": 'success'}
-                    msg = json.dumps(msgdict)
-                    s.sendall(msg.encode())
+                            # Client code to send login success message to master pi
+                            HOST = input("input server ip ")
+                            print()
+                            print("Login successful!")
+                            PORT = 65000
+                            ADDRESS = (HOST, PORT)
+                            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                            s.connect(ADDRESS)
+                            msgdict = {"username": uid, "email": email[0][0], "status": 'success'}
+                            msg = json.dumps(msgdict)
+                            s.sendall(msg.encode())
 
-                    # Server code to receive logout message from master pi
-                    HOST = ""
-                    ADDRESS = (HOST, PORT)
-                    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-                    s.bind(ADDRESS)
-                    s.listen()
-                    while True:
-                        print("Waiting for user logout...\n")
-                        con, addr = s.accept()
-                        print(uname + ", you have logged out")
-                        data = con.recv(4096)
-                        data = data.decode()
-                        if not data:
-                            break
-                        elif data == 'killsrv':
-                            con.close()
-                            break
+                            # Server code to receive logout message from master pi
+                            HOST = ""
+                            ADDRESS = (HOST, PORT)
+                            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                            s.bind(ADDRESS)
+                            s.listen()
+                            while True:
+                                print("Waiting for user logout...\n")
+                                con, addr = s.accept()
+                                print(uid + ", you have logged out")
+                                data = con.recv(4096)
+                                data = data.decode()
+                                if not data:
+                                    break
+                                elif data == 'killsrv':
+                                    con.close()
+                                    break
+                        else:
+                            
+                            #  If encryption of password is not same as value in database
+                            print()
+                            print('Credentials are not valid!')
+
                 else:
+                    
+                    # If username does not exist in database
                     print()
-                    print('Credentials are not valid!')
+                    print('Credentials are not valid')
+                        
 
             # If option 3 then exit system
             elif(options == '3'):
