@@ -52,6 +52,7 @@ class server():
                 elif(opt == '2'):
                     print("Enter Book ID to borrow")
                     bookTitle = input()
+                    
                 elif(opt == '3'):
                     print("Enter Book ID to return")
                     bookTitle = input()
