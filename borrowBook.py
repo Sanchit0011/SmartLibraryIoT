@@ -9,10 +9,10 @@ class borrow():
 
     def __init__(self, username, bookid):
         """Borrow class will use username and bookid to execute its methods
-        
+
         Arguments:
             username {String} -- username of the user
-            bookid {String} -- Unique book id of the book 
+            bookid {String} -- Unique book id of the book
             which is desired for borrowing
         """
         self.uname = username
@@ -25,44 +25,35 @@ class borrow():
         # check book is already borrowed or not
         q = ("""Select *
         from bookborrowed
-        where lmsuserid like %s """)
+        where bookid = %s """)
 
         qBrw = (
             """ INSERT INTO bookborrowed (bookborrowedid, lmsuserid, bookid,
             status, borroweddate, returneddate)
             VALUES (default, %s, %s, 'borrowed',
-            current_date, current_date + INTERVAL '7' DAY)""")
+            current_date, null)""")
 
-        rows = dbCon().selectQ(q, self.uname)
-        print(rows)
-        print(len(rows))
+        rows = dbCon().selectQ(q, self.bkid)
         if len(rows) is not 0:
             for r in rows:
-                if r[2] is self.bkid:
+                if r[2] - self.bkid is 0:
                     q2Chk = ("""Select *
                     from bookborrowed
-                    where lmsuserid like %s AND bookid=%s
+                    where bookid = %s
                     ORDER BY bookborrowedid DESC
                     LIMIT 1 """)
-                    userRows = dbCon().selectQ(q2Chk, self.uname, self.bkid)
-                    print(userRows)
-                    for i in userRows:
-                        if i[3] is "returned":
-                            # user can borrow book,borrow querry
-                            dbCon().insUpDel(qBrw)
-
-                        else:
-                            # user can not borrow book,reject Alert
-                            print("Book already borrowed")
+                    userRows = dbCon().selectQ(q2Chk, self.bkid)
+                    if userRows[0][3][0] is 'r':
+                        # user can borrow book,borrow querry
+                        dbCon().insUpDel(qBrw, self.uname, self.bkid)
+                        print("Book borrow sucessfull")
+                    else:
+                        # user can not borrow book,reject Alert
+                        print("Book already borrowed")
+                        break
 
         else:
             # borrow book since this book was never borrowed or
             # returned,borrow book
             dbCon().insUpDel(qBrw, self.uname, self.bkid)
             print("Book borrow sucessfull")
-
-        #     p
-
-
-p = borrow("halil", 4)
-p.bkcheckout()

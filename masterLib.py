@@ -2,9 +2,24 @@ import socket
 import json
 from login_client import client
 from psql import dbCon
+from borrowBook import borrow
+from returnBook import Return
 
 
 class server():
+
+    def checkBID(self, bid):
+        qu = ("""select bookid
+            from book
+            """)
+        bIDs = dbCon().selectQ(qu)
+        bIDList = []
+        for ids in bIDs:
+            bIDList.append(ids[0])
+        if bid in bIDList:
+            return True
+        else:
+            return False
 
     def servListen(self):
         # accept RP user username and success message
@@ -21,9 +36,41 @@ class server():
             data = conn.recv(1024)
             data = data.decode()
             data = json.loads(data)
-            print(data["username"] + " has successfuly logged in.")
             conn.close()
-            while(True):
+            uname = data["username"]
+            fname = data["fname"]
+            lname = data["lname"]
+            uEmail = data["email"]
+            uid = -1
+            row = dbCon().selectQ("""
+            select uname, lmsuserid, lmsuserid-lmsuserid+1
+            from lmsuser where uname = %s ;
+            """, uname)
+            flag = True
+            register = True
+            if len(row) > 0:
+                if(row[0][2] is 1):
+                    flag = True
+                    uid = row[0][1]
+                    print("user found")
+            else:
+                flag = False
+                row = dbCon().insUpDel("""
+                INSERT INTO lmsuser(
+                lmsuserid, firstname, lastname, email, uname)
+                VALUES (default, %s, %s, %s, %s);
+                """, fname, lname, uEmail, uname)
+                row = dbCon().selectQ("""
+                SELECT lmsuserid
+                FROM lmsuser
+                where uname = %s;
+                """, uname)
+                uid = row[0][0]
+                flag = True
+                print("user registered")
+
+            print(fname + " " + lname + " has successfuly logged in.")
+            while(flag is True and uid > -1):
                 print()
                 print('Please select the option you want to proceed with:')
                 print()
@@ -41,27 +88,35 @@ class server():
                 elif(opt == '1'):
                     print("Enter book name to search")
                     bookTitle = input()
-                    q = ("""
-                    SELECT bookid, title, author, publisheddate
-                    FROM book
-                    WHERE title like %s """)
+                    q = ("""select distinct
+                    book.bookid, book.title, book.author, book.publisheddate
+                    from book
+                    where title like %s """)
                     rows = dbCon().selectQ(q, "%"+bookTitle+"%")
                     print("| Bookid | Title | Author | Published Date |")
                     for r in rows:
                         print(str(r[0])+" | "+r[1]+" | "+r[2]+" | "+str(r[3]))
                 elif(opt == '2'):
                     print("Enter Book ID to borrow")
-                    bookTitle = input()
-                    
+                    bookID = input()
+                    bookID = int(bookID)
+                    if self.checkBID(bookID):
+                        p = borrow(uid, bookID)
+                        p.bkcheckout()
+                    else:
+                        print("Invalid book ID")
                 elif(opt == '3'):
-                    print("Enter Book ID to return")
-                    bookTitle = input()
+                        p = Return(uid)
+                        p.returnBook()
                 elif(opt == '4'):
                     # send message to server for logout
                     client().clPost(addr[0])
-                    print(data["username"] + " has successfuly logged out.")
+                    print(fname + " " + lname + " has successfuly logged out.")
+                    uname = ""
+                    fname = ""
+                    lname = ""
+                    uEmail = ""
+                    uid = -1
                     print()
                     break
-
-
 server().servListen()
