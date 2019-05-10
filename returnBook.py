@@ -5,37 +5,61 @@ class Return:
     def __init__(self, username):
         self.username = username
 
+    def checkBID(self, bid):
+        qu = ("""select bookid
+            from book
+            """)
+        bIDs = dbCon().selectQ(qu)
+        bIDList = []
+        for ids in bIDs:
+            bIDList.append(ids[0])
+        if bid in bIDList:
+            return True
+        else:
+            return False
+
     def returnBook(self):
         b = ("""Select bookborrowed.bookid, title
-        from bookborrowed inner join book 
+        from bookborrowed inner join book
         on bookborrowed.bookid = book.bookid
-        where lmsuserid like %s and status = 'borrowed' """)
+        where lmsuserid = %s and status = 'borrowed' """)
 
         qRtn = ("""UPDATE bookborrowed
         SET status = 'returned',
-            returneddate = current_date
-        where bookid = %s """)
+        returneddate = current_date
+        where bookid = %s and status = 'borrowed' """)
 
         books = dbCon().selectQ(b, self.username)
-        print("| Bookid | Title |")
-        for r in books:
-            print(str(r[0])+" | "+r[1])
+        if len(books) > 0:
+            print("| Bookid | Title |")
+            for r in books:
+                print(str(r[0])+" | "+r[1])
 
-        allBooks = ("""SELECT * FROM bookborrowed """)
-
-        inputid = input("Enter the ID of the book you want to return: ")
-
-        #check if the book has been borrowed
-        bookRows = dbCon().selectQ(allBooks, self.username, inputid)
-        print(bookRows)
-        for i in bookRows:
-            status = i[3][0]
-            if status is 'b':
-                dbCon().insUpDel(qRtn, inputid)
-                print("Book return successful")
-
+            allBooks = ("""SELECT * FROM bookborrowed """)
+            print("Enter Book ID to return")
+            bookID = input()
+            bookID = int(bookID)
+            if self.checkBID(bookID):
+                inputid = bookID
+                booksIdList = []
+                for book in books:
+                    booksIdList.append(book[0])
+                # check if the book has been borrowed
+                bookRows = dbCon().selectQ(allBooks, self.username, inputid)
+                flag = True
+                for i in bookRows:
+                    status = i[3][0]
+                    if inputid not in booksIdList:
+                        print("Invalid Book ID !")
+                        break
+                    elif status is 'b':
+                        dbCon().insUpDel(qRtn, inputid)
+                        print("Book return successful")
+                        flag = False
+                        break
+                if flag is True:
+                    print("The book has not been borrowed yet")
             else:
-                print("The book has not been borrowed yet")
-                 
-p = Return("halil")
-p.returnBook()
+                print("Invalid book ID")
+        else:
+            print("No book to return !")

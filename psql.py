@@ -37,7 +37,7 @@ class dbCon():
         self.closeCon(conn)
         return rows
 
-    def insUpDel(self, qs):
+    def insUpDel(self, qs, *argv):
         """Def to execute insert, update or delete queries
 
         Arguments:
@@ -48,7 +48,7 @@ class dbCon():
         """
         conn = self.createCon()
         cur = conn.cursor()
-        cur.execute(qs)
+        cur.execute(qs, argv)
         conn.commit()
         count = cur.rowcount
         self.closeCon(conn)
