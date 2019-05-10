@@ -1,10 +1,8 @@
 # Library Management System
 
 ## File details:
-- Entry point - server.js
 
 ## Libraries Used:
-- ReactJS
 
 ## References:
 
