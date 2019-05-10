@@ -1,0 +1,41 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Librabry Management System
+{% endblock %}
+
+{% block content %}
+<h1>Add Book:</h1>
+<div class="row">
+    <div class="container">
+        <form method="POST" action="{{ url_for('addBook') }}">
+            <dl>
+                {{ wtf.form_field(form.title) }}
+                {{ wtf.form_field(form.author) }}
+                {{ wtf.form_field(form.publisheddate)}}
+            <input class="btn btn-primary" type="submit" value="Add Book">
+            </dl>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+<!-- <html>
+    <head>
+        <title>Library Management System</title>
+    </head>
+    <body>
+        <h1>Add a book to the database:</h1>
+        <form method="POST" action="{{ url_for('addBook') }}">
+            {{ form.csrf_token }}
+            {{ form.title.label }}
+            {{ form.title }}
+            {{ form.author.label}}
+            {{ form.author }}
+            {{ form.publisheddate.label}}
+            {{ form.publisheddate(type='date') }}
+            <input type="submit" value="Add Book">
+        </form>
+    </body>
+</html> -->
