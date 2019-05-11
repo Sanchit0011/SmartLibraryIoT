@@ -13,6 +13,11 @@ bootstrap = Bootstrap(app)
 
 
 class NewBook(FlaskForm):
+    """NewBook Class extends the predefined FlaskForm class and contains the definition of the fields of the form
+    
+    Arguments:
+        FlaskForm {class} -- predefined wtf class
+    """
     title = StringField('Title', validators=[InputRequired()])
     author = StringField('Author', validators=[InputRequired()])
     try:
@@ -22,6 +27,11 @@ class NewBook(FlaskForm):
 
 @app.route('/addBook', methods=['GET', 'POST'])
 def addBook():
+    """ This is the addBook API that contains the functionality to add the book. It takes the input from the user and inserts it into the database
+    
+    Returns:
+        string -- a message that the book has been successfully added to the database.
+    """
     form = NewBook()
     if request.method == 'POST':
         title = request.form.get('title')
