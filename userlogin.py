@@ -6,6 +6,7 @@ import re
 import socket
 import json
 from passlib.hash import sha256_crypt
+from face_reco import face_reco
 
 
 # Defined the userlogin class
@@ -41,10 +42,17 @@ class userlogin:
         If users choose to register, they will be asked to fill in a valid
         username, firstname, lastname, email and password to create an account.
 
-        If users choose to log in, they will be asked to enter their username
-        and password in order to access the system. Access will only be
-        granted if username and password are correct. If login is successful,
-        a success message along with the username is sent to the master pi.
+        If users choose to log in, they will be asked to specify the login method they 
+        want to use. 
+        
+        If they choose face recognition, their face will be identified using a usb 
+        webcam. If their face is identified, they will be logged in to the system otherwise
+        am error message will be displayed. 
+        
+        If they choose console login they will be asked to enter their username and password 
+        in order to access the system. Access will only be granted if username and password 
+        are correct. If login is successful, a success message along with the username is sent 
+        to the master pi.
 
         If users choose to exit, they will exit the system."""
 
@@ -61,10 +69,12 @@ class userlogin:
 
             # Took user option as input
             options = input()
+            
+            # Ask user to enter option again if option isn't 1, 2 or 3
             if(options != '1' and options != '2' and options != '3'):
                 print()
-                print('Please enter 1 or 2 as your choices')
-
+                print('Please enter 1, 2 or 3 as your choices')
+            
             # If option 1 then register new user
             elif(options == '1'):
 
@@ -168,74 +178,185 @@ class userlogin:
 
             # If option 2 then log in to system
             elif(options == '2'):
-
-                # Create connection to db
-                conn = self.create_conn()
-                cur = conn.cursor()
-                cur2 = conn.cursor()
+                
+                # Menu asking user to specify login method
+                print()
+                print("Please specify which login method you want to use:")
+                print()
+                print('1. Face recognition')
+                print('2. Console login')
                 print()
 
-                # Input username and password
-                uid = input('Enter username: ')
-                passw = input('Enter password: ')
-                cur.execute('''SELECT password from USERDETAILS
-                where userid = ?''', (uid,))
-                credentials = cur.fetchall()
-                email = cur2.execute('''SELECT email from USERDETAILS
-                where userid = ?''', (uid,))
-                email = cur2.fetchall()
+                # Taking login option as input
+                login_opt = input()
 
-                # Checking if username exists in database
-                if(len(credentials) >= 1):
-                    
-                    for row in credentials:
-                        
-                        # Verifying that encryption of password is same as value in database 
-                        if(sha256_crypt.verify(passw, row[0])):
-                            print()
-
-                            # Client code to send login success message to master pi
-                            HOST = input("input server ip ")
-                            print()
-                            print("Login successful!")
-                            PORT = 65000
-                            ADDRESS = (HOST, PORT)
-                            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-                            s.connect(ADDRESS)
-                            msgdict = {"username": uid, "email": email[0][0], "status": 'success'}
-                            msg = json.dumps(msgdict)
-                            s.sendall(msg.encode())
-
-                            # Server code to receive logout message from master pi
-                            HOST = ""
-                            ADDRESS = (HOST, PORT)
-                            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-                            s.bind(ADDRESS)
-                            s.listen()
-                            while True:
-                                print("Waiting for user logout...\n")
-                                con, addr = s.accept()
-                                print(uid + ", you have logged out")
-                                data = con.recv(4096)
-                                data = data.decode()
-                                if not data:
-                                    break
-                                elif data == 'killsrv':
-                                    con.close()
-                                    break
-                        else:
-                            
-                            #  If encryption of password is not same as value in database
-                            print()
-                            print('Credentials are not valid!')
-
-                else:
-                    
-                    # If username does not exist in database
+                # Ask user to enter option again if option isn't 1 or 2
+                if(login_opt != '1' and login_opt != '2'):
                     print()
-                    print('Credentials are not valid')
+                    print('Please enter 1 or 2 as your choices')
+
+                # If option is 1, then user logs in using face recognition
+                elif(login_opt == '1'):
+                    
+                    # Create face_reco object and call detect_face method
+                    face = face_reco()
+                    uid = face.detect_face()
+                    
+                    # If Unknown is returned then error message is printed out
+                    if(uid == 'Unknown'):
+                        print()
+                        print("Unable to identify face")
+
+                    else:
+
+                        # Create connection to db
+                        conn = self.create_conn()
+                        
+                        cur = conn.cursor()
+                        cur2 = conn.cursor()
+
+                        # Retrieve user's email from db 
+                        email = cur.execute('''SELECT email from USERDETAILS
+                        where userid = ?''', (uid,))
+                        email = cur.fetchall()
+
+                        # Client code to send user details and login success message to master pi
+                        HOST = input("input server ip ")
+                        print()
+                        PORT = 65000
+                        ADDRESS = (HOST, PORT)
+                        s = socket.socket(
+                        socket.AF_INET, socket.SOCK_STREAM)
+                        s.setsockopt(
+                        socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                        s.connect(ADDRESS)
+                        names = cur2.execute('''SELECT FIRSTNAME,
+                        LASTNAME from USERDETAILS
+                        where userid = ?''', (uid,))
+                        userRow = names.fetchall()
+                        fname = userRow[0][0]
+                        lname = userRow[0][1]
+                        msgdict = {
+                            "username": uid,
+                            "email": email[0][0],
+                            "fname": fname,
+                            "lname": lname,
+                            "status": 'success'}
+                        msg = json.dumps(msgdict)
+                        s.sendall(msg.encode())
+                        print("Login successful!")
+                        
+                        # Server code to receive logout message from master pi            
+                        HOST = ""
+                        ADDRESS = (HOST, PORT)
+                        s = socket.socket(
+                        socket.AF_INET, socket.SOCK_STREAM)
+                        s.setsockopt(
+                        socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                        s.bind(ADDRESS)
+                        s.listen()
+                        while True:
+                            print("Waiting for user logout...\n")
+                            con, addr = s.accept()
+                            print(uid + ", you have logged out")
+                            data = con.recv(4096)
+                            data = data.decode()
+                            if not data:
+                                break
+                            elif data == 'killsrv':
+                                con.close()
+                                break
+
+                # If option is 2, then user logs in using console
+                elif(login_opt == '2'):
+                    
+                    # Create connection to db
+                    conn = self.create_conn()
+                    
+                    cur = conn.cursor()
+                    cur2 = conn.cursor()
+                    cur3 = conn.cursor()
+                    print()
+
+                    # Input username and password
+                    uid = input('Enter username: ')
+                    passw = input('Enter password: ')
+                    
+                    # Retrieve password and email from db 
+                    cur.execute('''SELECT password from USERDETAILS
+                    where userid = ?''', (uid,))
+                    credentials = cur.fetchall()
+                    email = cur2.execute('''SELECT email from USERDETAILS
+                    where userid = ?''', (uid,))
+                    email = cur2.fetchall()
+
+                    # Checking if username exists in database
+                    if(len(credentials) >= 1):
+                        
+                        for row in credentials:
+                            
+                            # Verifying that encryption of password is same as value in database 
+                            if(sha256_crypt.verify(passw, row[0])):
+                                print()
+
+                                # Client code to send login success message to master pi
+                                HOST = input("input server ip ")
+                                print()
+                                PORT = 65000
+                                ADDRESS = (HOST, PORT)
+                                s = socket.socket(
+                                    socket.AF_INET, socket.SOCK_STREAM)
+                                s.setsockopt(
+                                    socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                                s.connect(ADDRESS)
+
+                                names = cur3.execute('''SELECT FIRSTNAME,
+                                LASTNAME from USERDETAILS
+                                where userid = ?''', (uid,))
+                                userRow = names.fetchall()
+                                fname = userRow[0][0]
+                                lname = userRow[0][1]
+                                msgdict = {
+                                    "username": uid,
+                                    "email": email[0][0],
+                                    "fname": fname,
+                                    "lname": lname,
+                                    "status": 'success'}
+                                msg = json.dumps(msgdict)
+                                s.sendall(msg.encode())
+                                print("Login successful!")
+                                
+                                # Server code to receive logout message from master pi
+                                HOST = ""
+                                ADDRESS = (HOST, PORT)
+                                s = socket.socket(
+                                    socket.AF_INET, socket.SOCK_STREAM)
+                                s.setsockopt(
+                                    socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                                s.bind(ADDRESS)
+                                s.listen()
+                                while True:
+                                    print("Waiting for user logout...\n")
+                                    con, addr = s.accept()
+                                    print(uid + ", you have logged out")
+                                    data = con.recv(4096)
+                                    data = data.decode()
+                                    if not data:
+                                        break
+                                    elif data == 'killsrv':
+                                        con.close()
+                                        break
+                            else:
+                                
+                                # If encryption of password is not same as value in database
+                                print()
+                                print('Credentials are not valid!')
+
+                    else:
+                        
+                        # If username does not exist in database
+                        print()
+                        print('Credentials are not valid')
                         
 
             # If option 3 then exit system
