@@ -9,6 +9,17 @@ import warnings
 
 # Defined the visual class
 class visual():
+    """The visual class is used to generate visualisations for book borrow 
+    and return statistics. There are three visualisations generated:
+    
+    1. The first visualisation consists of two vertical bar graphs
+    which depict the number of books being borrowed and returned per day.
+    
+    2. The second visualisation consists of two vertical bar graphs
+    which depict the number of books being borrowed and returned per week.
+
+    3. The third visualisation is a horizontal bar graph which depicts the 
+    three most popular books in the library."""
 
     # Suppress all warnings
     warnings.simplefilter(action='ignore')
