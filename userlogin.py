@@ -37,7 +37,6 @@ class userlogin:
         register, log in to the system or exit the menu.
         If users choose to register, they will be asked to fill in a valid
         username, firstname, lastname, email and password to create an account.
-<<<<<<< HEAD
 
         If users choose to log in, they will be asked to specify the login method they 
         want to use. 
@@ -51,12 +50,6 @@ class userlogin:
         are correct. If login is successful, a success message along with the username is sent 
         to the master pi.
 
-=======
-        If users choose to log in, they will be asked to enter their username
-        and password in order to access the system. Access will only be
-        granted if username and password are correct. If login is successful,
-        a success message along with the username is sent to the master pi.
->>>>>>> b3cbed4d397138df09892d4a4e88cd2e8e6ae382
         If users choose to exit, they will exit the system."""
 
         while(1):
@@ -153,7 +146,7 @@ class userlogin:
                     print()
                     passw = input('Enter password: ')
                     passlen = len(passw)
-                    regexstr = r'(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)'
+                    regexstr = '(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)'
                     match = bool(re.match(regexstr, passw))
                     if(passlen < 8 or match is False):
                         errorstr = 'Password should be atleast 8 characters'
@@ -181,17 +174,8 @@ class userlogin:
 
             # If option 2 then log in to system
             elif(options == '2'):
-<<<<<<< HEAD
                 
                 # Menu asking user to specify login method
-=======
-
-                # Create connection to db
-                conn = self.create_conn()
-                cur = conn.cursor()
-                cur2 = conn.cursor()
-                cur3 = conn.cursor()
->>>>>>> b3cbed4d397138df09892d4a4e88cd2e8e6ae382
                 print()
                 print("Please specify which login method you want to use:")
                 print()
@@ -202,7 +186,6 @@ class userlogin:
                 # Taking login option as input
                 login_opt = input()
 
-<<<<<<< HEAD
                 # Ask user to enter option again if option isn't 1 or 2
                 if(login_opt != '1' and login_opt != '2'):
                     print()
@@ -371,90 +354,6 @@ class userlogin:
                         print()
                         print('Credentials are not valid')
                         
-=======
-                # Input username and password
-                uid = input('Enter username: ')
-                passw = input('Enter password: ')
-                cur.execute('''SELECT password from USERDETAILS
-                where userid = ?''', (uid,))
-                credentials = cur.fetchall()
-                email = cur2.execute('''SELECT email from USERDETAILS
-                where userid = ?''', (uid,))
-                email = cur2.fetchall()
-
-                # Checking if username exists in database
-                if(len(credentials) >= 1):
-
-                    for row in credentials:
-
-                        # Verifying that encryption of password is same as
-                        # value in database
-                        if(sha256_crypt.verify(passw, row[0])):
-                            print()
-
-                            # Client code to send login success message to
-                            # master pi
-                            HOST = input("input server ip ")
-                            print()
-                            PORT = 65000
-                            ADDRESS = (HOST, PORT)
-                            s = socket.socket(
-                                socket.AF_INET, socket.SOCK_STREAM)
-                            s.setsockopt(
-                                socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-                            s.connect(ADDRESS)
-
-                            names = cur3.execute('''SELECT FIRSTNAME,
-                            LASTNAME from USERDETAILS
-                            where userid = ?''', (uid,))
-                            userRow = names.fetchall()
-                            print(userRow[0][0])
-                            print(userRow[0][1])
-                            fname = userRow[0][0]
-                            lname = userRow[0][1]
-                            msgdict = {
-                                "username": uid,
-                                "email": email[0][0],
-                                "fname": fname,
-                                "lname": lname,
-                                "status": 'success'}
-                            msg = json.dumps(msgdict)
-                            s.sendall(msg.encode())
-                            print("Login successful!")
-                            # Server code to receive logout message from master
-                            # pi
-                            HOST = ""
-                            ADDRESS = (HOST, PORT)
-                            s = socket.socket(
-                                socket.AF_INET, socket.SOCK_STREAM)
-                            s.setsockopt(
-                                socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-                            s.bind(ADDRESS)
-                            s.listen()
-                            while True:
-                                print("Waiting for user logout...\n")
-                                con, addr = s.accept()
-                                print(uid + ", you have logged out")
-                                data = con.recv(4096)
-                                data = data.decode()
-                                if not data:
-                                    break
-                                elif data == 'killsrv':
-                                    con.close()
-                                    break
-                        else:
-
-                            # If encryption of password is not same as value in
-                            # database
-                            print()
-                            print('Credentials are not valid!')
-
-                else:
-
-                    # If username does not exist in database
-                    print()
-                    print('Credentials are not valid')
->>>>>>> b3cbed4d397138df09892d4a4e88cd2e8e6ae382
 
             # If option 3 then exit system
             elif(options == '3'):
