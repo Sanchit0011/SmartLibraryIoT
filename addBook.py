@@ -72,12 +72,32 @@ def index():
 
 @app.route('/item/<int:id>')
 def delF(id):
-    dbCon().insUpDel("""DELETE FROM book WHERE book.bookid = %s """, id)
+    q = ("""Select *
+    from bookborrowed
+    where bookid = %s """)
+    rows = dbCon().selectQ(q, id)
+    if len(rows) == 0:
+        form = NewBook()
+        table = ItemTable(items)
+        dbCon().insUpDel("""DELETE FROM book WHERE book.bookid = %s """, id)
+        return render_template('addBook.html', form=form, table=table, myModaldel="myModaldel")
+
     items = dbCon().selectQName("""select bookid,title,author,publisheddate,
-    'delete' as manage from book""")
-    table = ItemTable(items)
-    form = NewBook()
-    return render_template('addBook.html', form=form, table=table, myModaldel="myModaldel")
+        'delete' as manage from book""")
+    books = dbCon().selectQ(""" Select status
+        from bookborrowed inner join book
+        on bookborrowed.bookid = book.bookid
+        where bookborrowed.bookid = %s ORDER BY returneddate DESC LIMIT 1 """, id)
+    if books[0][0] == "borrowed":
+        form = NewBook()
+        table = ItemTable(items)
+        return render_template('addBook.html', form=form, table=table, myModalcantdel="myModalcantdel")
+    elif books[0][0] == "returned":
+        form = NewBook()
+        table = ItemTable(items)
+        dbCon().insUpDel("""DELETE FROM bookborrowed WHERE bookborrowed.bookid = %s """, id)
+        dbCon().insUpDel("""DELETE FROM book WHERE book.bookid = %s """, id)
+        return render_template('addBook.html', form=form, table=table, myModaldel="myModaldel")
 
 
 @app.route("/vis")
@@ -136,4 +156,4 @@ def logMeOut():
         return render_template('login.html', form=form)
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(debug=True)
