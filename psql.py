@@ -1,4 +1,5 @@
 import psycopg2
+import psycopg2.extras
 
 
 class dbCon():
@@ -37,7 +38,24 @@ class dbCon():
         self.closeCon(conn)
         return rows
 
-    def insUpDel(self, qs):
+    def selectQName(self, qs, *argv):
+        """def to run and get result of select query
+
+        Arguments:
+            qs {string} -- query being executed
+            *argv {variable dataTypes arguments} -- query variables
+
+        Returns:
+            sql rows -- rows returned by select query
+        """
+        conn = self.createCon()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor)
+        cur.execute(qs, argv)
+        rows = cur.fetchall()
+        self.closeCon(conn)
+        return rows
+
+    def insUpDel(self, qs, *argv):
         """Def to execute insert, update or delete queries
 
         Arguments:
@@ -48,7 +66,7 @@ class dbCon():
         """
         conn = self.createCon()
         cur = conn.cursor()
-        cur.execute(qs)
+        cur.execute(qs, argv)
         conn.commit()
         count = cur.rowcount
         self.closeCon(conn)

@@ -2,21 +2,84 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}
-Librabry Management System
+Librabry Management System.
 {% endblock %}
 
+
+
 {% block content %}
-<h1>Add Book:</h1>
-<div class="row">
-    <div class="container">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='dataTables.bootstrap.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='logStyle.css')}}">
+<div></div>
+<a data-title="Logout" class="link" style="float:right" href="/logout"></a>
+
+<button type="button"  data-toggle="modal" data-target="#myModaladd" style="display: none;" id="openadd"></button>
+<button type="button"  data-toggle="modal" data-target="#myModaldel" style="display: none;" id="opendel"></button>
+
+<div class="modal fade" id={{myModaladd}} role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Notification</h4>
+            </div>
+            <div class="modal-body">
+              <p>Book Added</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" onclick="openModal('myModaladd')">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id={{myModaldel}} role="dialog" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Notification</h4>
+                </div>
+                <div class="modal-body">
+                  <p>Book Deleted</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal" onclick="openModal('myModaldel')">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+<div class="container">
+<h4>Add Book :</h4>
+<div class="container">
+    <div>
         <form method="POST" action="{{ url_for('addBook') }}">
             <dl>
                 {{ wtf.form_field(form.title) }}
                 {{ wtf.form_field(form.author) }}
                 {{ wtf.form_field(form.publisheddate)}}
-            <input class="btn btn-primary" type="submit" value="Add Book">
+                <input class="btn btn-primary" type="submit" value="Add Book">
             </dl>
         </form>
     </div>
 </div>
+<div>
+    <h4>
+        Analytical Visualisation :
+    </h4>
+    <div class="container">
+        <a href="/vis">Click to Download</a>
+    </div>
+</div>
+<h4>Delete Book :</h4>
+<div class="container">
+    {{table}}
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script src="{{url_for('static', filename='jquery.dataTables.min.js')}}"></script>
+<script src="{{url_for('static', filename='dataTables.bootstrap.min.js')}}"></script>
+<script src="{{url_for('static', filename='sort.js')}}"></script>
 {% endblock %}
