@@ -72,6 +72,8 @@ def index():
 
 @app.route('/item/<int:id>')
 def delF(id):
+    items = dbCon().selectQName("""select bookid,title,author,publisheddate,
+        'delete' as manage from book""")
     q = ("""Select *
     from bookborrowed
     where bookid = %s """)
@@ -81,18 +83,19 @@ def delF(id):
         table = ItemTable(items)
         dbCon().insUpDel("""DELETE FROM book WHERE book.bookid = %s """, id)
         return render_template('addBook.html', form=form, table=table, myModaldel="myModaldel")
-
-    items = dbCon().selectQName("""select bookid,title,author,publisheddate,
-        'delete' as manage from book""")
     books = dbCon().selectQ(""" Select status
         from bookborrowed inner join book
         on bookborrowed.bookid = book.bookid
         where bookborrowed.bookid = %s ORDER BY returneddate DESC LIMIT 1 """, id)
     if books[0][0] == "borrowed":
+        items = dbCon().selectQName("""select bookid,title,author,publisheddate,
+        'delete' as manage from book""")
         form = NewBook()
         table = ItemTable(items)
         return render_template('addBook.html', form=form, table=table, myModalcantdel="myModalcantdel")
     elif books[0][0] == "returned":
+        items = dbCon().selectQName("""select bookid,title,author,publisheddate,
+        'delete' as manage from book""")
         form = NewBook()
         table = ItemTable(items)
         dbCon().insUpDel("""DELETE FROM bookborrowed WHERE bookborrowed.bookid = %s """, id)
