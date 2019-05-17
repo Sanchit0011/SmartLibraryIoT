@@ -1,5 +1,4 @@
 from psql import dbCon
-
 from calendar_event import calendar_event
 
 class Return:
