@@ -82,4 +82,3 @@ class borrow():
             event.insert(title[0][0], self.bkid)
             dbCon().insUpDel(qBrw, self.uname, self.bkid)
             print("Book borrow sucessfull")
-            
