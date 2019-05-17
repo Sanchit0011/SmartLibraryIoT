@@ -1,6 +1,6 @@
 # Imported the necessary modules
 import pandas as pd
-from psql import psql
+from psql import dbCon as psql
 import numpy as np
 import matplotlib.pyplot as plt
 from datetime import *
