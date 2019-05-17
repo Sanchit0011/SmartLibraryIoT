@@ -1,5 +1,5 @@
 from psql import dbCon
-
+from calendar_event import calendar_event
 
 class Return:
     def __init__(self, username):
@@ -30,6 +30,15 @@ class Return:
             return True
         else:
             return False
+    
+    def declare_event_object(self):
+        """This function creates an object of the calendar_event class and then returns it.
+        
+        Returns:
+            connection -- Object of the calendar_event class.
+        """
+        event = calendar_event()
+        return event
 
     def returnBook(self):
         """The Return Book method checks if the book id entered by the user has status as borrowed.
@@ -69,6 +78,8 @@ class Return:
                         print("Invalid Book ID !")
                         break
                     elif status is 'b':
+                        event = self.declare_event_object()
+                        event.delete(bookID)
                         dbCon().insUpDel(qRtn, inputid)
                         print("Book return successful")
                         flag = False
