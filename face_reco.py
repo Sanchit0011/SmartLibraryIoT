@@ -1,9 +1,3 @@
-# USAGE
-# With default parameters
-#     python3 03_recognise.py
-# OR specifying the encodings, screen resolution
-#     python3 03_recognise.py -e encodings.pickle -r 240
-
 ## Acknowledgement
 ## This code is adapted from:
 ## https://www.pyimagesearch.com/2018/06/18/face-recognition-with-opencv-python-and-deep-learning/
