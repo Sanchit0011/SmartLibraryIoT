@@ -1,4 +1,5 @@
 from psql import dbCon
+
 from calendar_event import calendar_event
 
 class Return:
@@ -44,6 +45,7 @@ class Return:
         """The Return Book method checks if the book id entered by the user has status as borrowed.
         If yes, the book is returned, otherwise it gives an error
         """
+
         b = ("""Select bookborrowed.bookid, title
         from bookborrowed inner join book
         on bookborrowed.bookid = book.bookid
@@ -78,8 +80,10 @@ class Return:
                         print("Invalid Book ID !")
                         break
                     elif status is 'b':
+
                         event = self.declare_event_object()
                         event.delete(bookID)
+
                         dbCon().insUpDel(qRtn, inputid)
                         print("Book return successful")
                         flag = False
