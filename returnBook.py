@@ -1,11 +1,25 @@
 from psql import dbCon
 
+from calendar_event import calendar_event
 
 class Return:
     def __init__(self, username):
+        """Consructor for the Return class
+        
+        Arguments:
+            username {string} -- Its used to intialize the constructor
+        """
         self.username = username
 
     def checkBID(self, bid):
+        """This functions checks if the book id entered by the user exists in the database
+        
+        Arguments:
+            bid {string} -- Book id provided by the user
+        
+        Returns:
+            string -- returns true if the book is found and returns false if the book is not found
+        """
         qu = ("""select bookid
             from book
             """)
@@ -17,8 +31,21 @@ class Return:
             return True
         else:
             return False
+    
+    def declare_event_object(self):
+        """This function creates an object of the calendar_event class and then returns it.
+        
+        Returns:
+            connection -- Object of the calendar_event class.
+        """
+        event = calendar_event()
+        return event
 
     def returnBook(self):
+        """The Return Book method checks if the book id entered by the user has status as borrowed.
+        If yes, the book is returned, otherwise it gives an error
+        """
+
         b = ("""Select bookborrowed.bookid, title
         from bookborrowed inner join book
         on bookborrowed.bookid = book.bookid
@@ -53,6 +80,10 @@ class Return:
                         print("Invalid Book ID !")
                         break
                     elif status is 'b':
+
+                        event = self.declare_event_object()
+                        event.delete(bookID)
+
                         dbCon().insUpDel(qRtn, inputid)
                         print("Book return successful")
                         flag = False
