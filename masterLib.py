@@ -1,6 +1,6 @@
 import socket
 import json
-from login_client import client
+from logout_client import client
 from psql import dbCon
 from borrowBook import borrow
 from returnBook import Return
