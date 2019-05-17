@@ -2,9 +2,11 @@
 import pandas as pd
 from psql import dbCon as psql
 import numpy as np
-import matplotlib.pyplot as plt
 from datetime import *
 import warnings
+import matplotlib as matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 
 # Defined the visual class
@@ -106,7 +108,7 @@ class visual():
         fig.tight_layout()
         
         # Generates pdf containing both vertical bar graphs as a single plot
-        fig.savefig('day_wise.pdf')
+        fig.savefig('static/day_wise.pdf')
         
         # Close the cloud db connection
         obj.closeCon(conn)
@@ -183,7 +185,7 @@ class visual():
         fig.tight_layout()
 
         # Generates pdf containing both vertical bar graphs as a single plot
-        fig.savefig('week_wise.pdf')
+        fig.savefig('static/week_wise.pdf')
         
         # Close the cloud db connection
         obj.closeCon(conn)
@@ -214,7 +216,7 @@ class visual():
         ax.legend(["borrowed", "returned"])
         
         # Generates pdf containing the horizontal grouped bar graph
-        plt.savefig("popularbooks.pdf")
+        plt.savefig("static/popularbooks.pdf")
 
         # Close the cloud db connection
         obj.closeCon(conn)

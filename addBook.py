@@ -72,55 +72,65 @@ def index():
 
 @app.route('/item/<int:id>')
 def delF(id):
-    items = dbCon().selectQName("""select bookid,title,author,publisheddate,
-        'delete' as manage from book""")
-    q = ("""Select *
-    from bookborrowed
-    where bookid = %s """)
-    rows = dbCon().selectQ(q, id)
-    if len(rows) == 0:
-        form = NewBook()
-        table = ItemTable(items)
-        dbCon().insUpDel("""DELETE FROM book WHERE book.bookid = %s """, id)
-        return render_template('addBook.html', form=form, table=table, myModaldel="myModaldel")
-    books = dbCon().selectQ(""" Select status
-        from bookborrowed inner join book
-        on bookborrowed.bookid = book.bookid
-        where bookborrowed.bookid = %s ORDER BY returneddate DESC LIMIT 1 """, id)
-    if books[0][0] == "borrowed":
-        items = dbCon().selectQName("""select bookid,title,author,publisheddate,
-        'delete' as manage from book""")
-        form = NewBook()
-        table = ItemTable(items)
-        return render_template('addBook.html', form=form, table=table, myModalcantdel="myModalcantdel")
-    elif books[0][0] == "returned":
-        items = dbCon().selectQName("""select bookid,title,author,publisheddate,
-        'delete' as manage from book""")
-        form = NewBook()
-        table = ItemTable(items)
-        dbCon().insUpDel("""DELETE FROM bookborrowed WHERE bookborrowed.bookid = %s """, id)
-        dbCon().insUpDel("""DELETE FROM book WHERE book.bookid = %s """, id)
-        return render_template('addBook.html', form=form, table=table, myModaldel="myModaldel")
+    if 'username' in session:
+        q = ("""Select *
+        from bookborrowed
+        where bookid = %s """)
+        rows = dbCon().selectQ(q, id)
+        if len(rows) == 0:
+            books = dbCon().selectQ(""" Select status
+            from bookborrowed inner join book
+            on bookborrowed.bookid = book.bookid
+            where bookborrowed.bookid = %s ORDER BY returneddate DESC LIMIT 1 """, id)
+            dbCon().insUpDel("""DELETE FROM book WHERE book.bookid = %s """, id)
+            items = dbCon().selectQName("""select bookid,title,author,publisheddate,
+            'delete' as manage from book""")
+            table = ItemTable(items)
+            form = NewBook()
+            return render_template('addBook.html', form=form, table=table, myModaldel="myModaldel")
+        if books[0][0] == "borrowed":
+
+            form = NewBook()
+            items = dbCon().selectQName("""select bookid,title,author,publisheddate,
+            'delete' as manage from book""")
+            table = ItemTable(items)
+            return render_template('addBook.html', form=form, table=table, myModalcantdel="myModalcantdel")
+        elif books[0][0] == "returned":
+
+            dbCon().insUpDel("""DELETE FROM bookborrowed WHERE bookborrowed.bookid = %s """, id)
+            dbCon().insUpDel("""DELETE FROM book WHERE book.bookid = %s """, id)
+            form = NewBook()
+            items = dbCon().selectQName("""select bookid,title,author,publisheddate,
+            'delete' as manage from book""")
+            table = ItemTable(items)
+            return render_template('addBook.html', form=form, table=table, myModaldel="myModaldel")
+    else:
+        form = LoginForm()
+        return render_template('login.html', form=form)
 
 
 @app.route("/vis")
 def sendVis():
-    if os.path.exists("Visual.zip"):
-        os.remove("Visual.zip")
-    if os.path.exists("static/day_wise.pdf"):
-        os.remove("static/day_wise.pdf")
-    if os.path.exists("static/week_wise.pdf"):
-        os.remove("static/week_wise.pdf")
-    if os.path.exists("static/popularbooks.pdf"):
-        os.remove("static/popularbooks.pdf")
-    vis = visual()
-    vis.create_day_graph()
-    vis.create_week_graph()
-    vis.create_popularbook_graph()
-    zipfile.ZipFile('Visual.zip', mode='w').write("static/day_wise.pdf")
-    zipfile.ZipFile('Visual.zip', mode='a').write("static/week_wise.pdf")
-    zipfile.ZipFile('Visual.zip', mode='a').write("static/popularbooks.pdf")
-    return send_file("Visual.zip", as_attachment=True)
+    if 'username' in session:
+        if os.path.exists("Visual.zip"):
+            os.remove("Visual.zip")
+        if os.path.exists("static/day_wise.pdf"):
+            os.remove("static/day_wise.pdf")
+        if os.path.exists("static/week_wise.pdf"):
+            os.remove("static/week_wise.pdf")
+        if os.path.exists("static/popularbooks.pdf"):
+            os.remove("static/popularbooks.pdf")
+        vis = visual()
+        vis.create_day_graph()
+        vis.create_week_graph()
+        vis.create_popularbook_graph()
+        zipfile.ZipFile('Visual.zip', mode='w').write("static/day_wise.pdf")
+        zipfile.ZipFile('Visual.zip', mode='a').write("static/week_wise.pdf")
+        zipfile.ZipFile('Visual.zip', mode='a').write("static/popularbooks.pdf")
+        return send_file("Visual.zip", as_attachment=True)
+    else:
+        form = LoginForm()
+        return render_template('login.html', form=form)
 
 
 @app.route('/addBook', methods=['GET', 'POST'])
@@ -153,6 +163,7 @@ def addBook():
 def logMeOut():
     form = LoginForm()
     if "username" in session:
+        session['username'] = 'logout'
         session.pop("username")
         return render_template('login.html', form=form)
     else:
