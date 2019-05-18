@@ -15,6 +15,7 @@ Librabry Management System.
 
 <button type="button"  data-toggle="modal" data-target="#myModaladd" style="display: none;" id="openadd"></button>
 <button type="button"  data-toggle="modal" data-target="#myModaldel" style="display: none;" id="opendel"></button>
+<button type="button"  data-toggle="modal" data-target="#myModalcantdel" style="display: none;" id="openmyModalcantdel"></button>
 
 <div class="modal fade" id={{myModaladd}} role="dialog" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog">
@@ -43,6 +44,22 @@ Librabry Management System.
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal" onclick="openModal('myModaldel')">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade" id={{myModalcantdel}} role="dialog" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title">Error</h4>
+                </div>
+                <div class="modal-body">
+                  <p>Book must be returned before deletion !</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal" onclick="openModal('myModalcantdel')">Close</button>
                 </div>
               </div>
             </div>

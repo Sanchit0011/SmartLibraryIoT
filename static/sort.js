@@ -45,18 +45,18 @@ document.body.onmouseup = function (e) {
 
 var openModal = function (name) {
     if (name != "") {
-        document.getElementById(name).id = "";
+        document.getElementById(name).id = "{{"+name+"}}";
     }
 }
 
 window.onload = function () {
     if (document.getElementById("myModaladd")) {
         document.getElementById("openadd").click()
-    }
-    if (document.getElementById("myModaldel")) {
+    } else if (document.getElementById("myModaldel")) {
         document.getElementById("opendel").click()
-    }
-    if (document.getElementById("myModallog")) {
+    } else if (document.getElementById("myModallog")) {
         document.getElementById("openlog").click()
+    } else if (document.getElementById("myModalcantdel")) {
+        document.getElementById("openmyModalcantdel").click()
     }
 };

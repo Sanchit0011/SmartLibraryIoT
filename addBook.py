@@ -54,6 +54,13 @@ class NewBook(FlaskForm):
         print("Enter the date dd-mm-yyyy format")
 
 
+@app.after_request
+def add_header(response):
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, public, max-age=0"
+    response.headers["Expires"] = 0
+    response.headers["Pragma"] = "no-cache"
+    return response
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if 'username' not in session:
@@ -77,11 +84,11 @@ def delF(id):
         from bookborrowed
         where bookid = %s """)
         rows = dbCon().selectQ(q, id)
-        if len(rows) == 0:
-            books = dbCon().selectQ(""" Select status
+        books = dbCon().selectQ(""" Select status
             from bookborrowed inner join book
             on bookborrowed.bookid = book.bookid
             where bookborrowed.bookid = %s ORDER BY returneddate DESC LIMIT 1 """, id)
+        if len(rows) == 0:
             dbCon().insUpDel("""DELETE FROM book WHERE book.bookid = %s """, id)
             items = dbCon().selectQName("""select bookid,title,author,publisheddate,
             'delete' as manage from book""")
@@ -89,14 +96,12 @@ def delF(id):
             form = NewBook()
             return render_template('addBook.html', form=form, table=table, myModaldel="myModaldel")
         if books[0][0] == "borrowed":
-
             form = NewBook()
             items = dbCon().selectQName("""select bookid,title,author,publisheddate,
             'delete' as manage from book""")
             table = ItemTable(items)
             return render_template('addBook.html', form=form, table=table, myModalcantdel="myModalcantdel")
         elif books[0][0] == "returned":
-
             dbCon().insUpDel("""DELETE FROM bookborrowed WHERE bookborrowed.bookid = %s """, id)
             dbCon().insUpDel("""DELETE FROM book WHERE book.bookid = %s """, id)
             form = NewBook()
@@ -162,9 +167,9 @@ def addBook():
 @app.route('/logout')
 def logMeOut():
     form = LoginForm()
-    if "username" in session:
+    if 'username' in session:
         session['username'] = 'logout'
-        session.pop("username")
+        session.pop('username',None)
         return render_template('login.html', form=form)
     else:
         return render_template('login.html', form=form)
