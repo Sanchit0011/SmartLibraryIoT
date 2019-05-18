@@ -170,6 +170,7 @@ class userlogin:
                         ''', (userid, encryptedpassw, firstName, lastName, e))
                         conn.commit()
                         conn.close()
+                        print(userid + ',' + 'you have been registered!')
                         break
 
             # If option 2 then log in to system
