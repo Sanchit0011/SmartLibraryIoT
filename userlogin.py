@@ -170,6 +170,7 @@ class userlogin:
                         ''', (userid, encryptedpassw, firstName, lastName, e))
                         conn.commit()
                         conn.close()
+                        print()
                         print(userid + ',' + 'you have been registered!')
                         break
 
