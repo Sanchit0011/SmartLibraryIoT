@@ -7,8 +7,14 @@ from returnBook import Return
 
 
 class server():
-
+    """class to recieve connection from RP through socket and provide library functions
+    """
     def checkBID(self, bid):
+        """check if book ID is in list of books
+        
+        Arguments:
+            bid {int} -- book id to check
+        """
         qu = ("""select bookid
             from book
             """)
@@ -22,7 +28,8 @@ class server():
             return False
 
     def servListen(self):
-        # accept RP user username and success message
+        """display library menu and call return borrow and search book.
+        """
         while True:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -79,7 +86,6 @@ class server():
                 print('3. return a book')
                 print('4. logout')
                 print()
-                # Took user option as input
                 opt = input()
                 if(opt != '1' and opt != '2' and opt != '3' and opt != '4'):
                     print()
@@ -109,7 +115,6 @@ class server():
                         p = Return(uid)
                         p.returnBook()
                 elif(opt == '4'):
-                    # send message to server for logout
                     client().clPost(addr[0])
                     print(fname + " " + lname + " has successfuly logged out.")
                     uname = ""

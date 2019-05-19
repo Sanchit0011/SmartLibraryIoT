@@ -18,11 +18,38 @@ bootstrap = Bootstrap(app)
 
 
 class LoginForm (FlaskForm):
+    """Match login creds with admin creds
+    
+    Arguments:
+        FlaskForm {FlaskForm} -- Flask form to check fields and validations
+    
+    Raises:
+        ValidationError: to check username
+        ValidationError: to check password
+    """
     def UnameChk(form, field):
+        """username check
+        
+        Arguments:
+            form {flask form} -- flask form submitted by user
+            field {flask form field} -- field to check user input
+        
+        Raises:
+            ValidationError: if username doesnt match
+        """
         if field.data != "jaqen":
             raise ValidationError("Invalid Login credentials !")
 
     def passChk(form, field):
+        """check password
+        
+        Arguments:
+            form {flask form} -- flask form submitted by user
+            field {flask form field} -- field to check user input
+        
+        Raises:
+            ValidationError: if password incorrect
+        """
         if field.data != "hghar":
             raise ValidationError("Invalid Login credentials !")
 
@@ -35,6 +62,11 @@ class LoginForm (FlaskForm):
 
 
 class ItemTable(Table):
+    """create html table from dict and create delete button dynamically
+    
+    Arguments:
+        Table {dictionary} -- row col values from query
+    """
     bookid = Col('bookid')
     title = Col('title')
     author = Col('author')
@@ -45,6 +77,11 @@ class ItemTable(Table):
 
 
 class NewBook(FlaskForm):
+    """validate title and author fields to be filled
+    
+    Arguments:
+        FlaskForm {FlaskForm} -- form submitted by user
+    """
     title = StringField('Title', validators=[InputRequired()])
     author = StringField('Author', validators=[InputRequired()])
     try:
@@ -56,6 +93,14 @@ class NewBook(FlaskForm):
 
 @app.after_request
 def add_header(response):
+    """add header in request toprevent browser for caching pages due to security reasons
+    
+    Arguments:
+        response {http response} -- response going to browser
+    
+    Returns:
+        http response -- with added no cache flag
+    """
     response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, public, max-age=0"
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
@@ -63,6 +108,12 @@ def add_header(response):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    """shows the login page if user is not logged in or has logged out
+    
+    Returns:
+        login.html -- login page if invalid creds
+        addbook url -- addBook url if login success
+    """
     if 'username' not in session:
         form = LoginForm()
         if request.method == 'POST':
@@ -79,6 +130,15 @@ def index():
 
 @app.route('/item/<int:id>')
 def delF(id):
+    """delete book
+    
+    Arguments:
+        id {int} -- book ID to delete
+    
+    Returns:
+        login page -- if user try to do url manipulation without login
+        addBook -- returns addBook page with appropriate info message
+    """
     if 'username' in session:
         q = ("""Select *
         from bookborrowed
@@ -116,6 +176,11 @@ def delF(id):
 
 @app.route("/vis")
 def sendVis():
+    """Run alaytics and generate visualization from database
+    
+    Returns:
+        file -- zip file containing graphs
+    """
     if 'username' in session:
         if os.path.exists("Visual.zip"):
             os.remove("Visual.zip")
@@ -140,6 +205,11 @@ def sendVis():
 
 @app.route('/addBook', methods=['GET', 'POST'])
 def addBook():
+    """add book to database with name author and publush date
+    
+    Returns:
+        template -- addBook page template with appropriate error message
+    """
     if 'username' in session:
         form = NewBook()
         items = dbCon().selectQName("""select bookid,title,author,publisheddate,
@@ -166,6 +236,11 @@ def addBook():
 
 @app.route('/logout')
 def logMeOut():
+    """logout admin from app to login page
+    
+    Returns:
+        html -- login page
+    """
     form = LoginForm()
     if 'username' in session:
         session['username'] = 'logout'
