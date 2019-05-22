@@ -1,0 +1,177 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>visualisation module &#8212; LMS_IOT 2019 documentation</title>
+    <link rel="stylesheet" href="_static/p_sphinx_theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/local_fonts.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/p_sphinx_theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="userlogin module" href="userlogin.html" /> 
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+      <div class="relbar-top">
+            
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="userlogin.html" title="userlogin module"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+      <li><a href="index.html">LMS_IOT 2019 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">IOTA2</a> &#187;</li> 
+      </ul>
+    </div>
+      </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-visualisation">
+<span id="visualisation-module"></span><h1>visualisation module<a class="headerlink" href="#module-visualisation" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="visualisation.visual">
+<em class="property">class </em><code class="descclassname">visualisation.</code><code class="descname">visual</code><a class="headerlink" href="#visualisation.visual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The visual class is used to generate visualisations for book borrow 
+and return statistics. There are three visualisations generated:</p>
+<p>1. The first visualisation consists of two vertical bar graphs
+which depict the number of books being borrowed and returned per day.</p>
+<p>2. The second visualisation consists of two vertical bar graphs
+which depict the number of books being borrowed and returned per week.
+3. The third visualisation is a horizontal bar graph which depicts the 
+three most popular books in the library.</p>
+<dl class="method">
+<dt id="visualisation.visual.calc_week_range">
+<code class="descname">calc_week_range</code><span class="sig-paren">(</span><em>year</em>, <em>week</em><span class="sig-paren">)</span><a class="headerlink" href="#visualisation.visual.calc_week_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function comes up with the week range based on a week number and a year. 
+First, the first date of the year is stored in a variable. Then, the number of days 
+are calculated based on the week number. The number of days and six plus the number of
+days are then seperately added to the variable to come up with the week range.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>year {int} – The year of the week range.
+week {int} – The week which is used to come up with the week range.</p>
+</dd>
+<dt>Returns:</dt><dd><p>string – The week range based on week number and year.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="visualisation.visual.create_day_graph">
+<code class="descname">create_day_graph</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#visualisation.visual.create_day_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function creates two vertical bar graphs with trend lines as subplots and combines them 
+into one main plot. The first bar graph depicts the number of books borrowed from the library 
+day-wise and the second one depicts the number of books being returned to the library day-wise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="visualisation.visual.create_popularbook_graph">
+<code class="descname">create_popularbook_graph</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#visualisation.visual.create_popularbook_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function creates a horizontal grouped bar graph which depicts the  
+three most popular books based on the number of times it has been borrowed. 
+The number of borrows and returns for each of the three books are depicted as
+horizontal stacked bars.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="visualisation.visual.create_week_graph">
+<code class="descname">create_week_graph</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#visualisation.visual.create_week_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function creates two vertical bar graphs with trend lines as subplots and combines them 
+into one main plot. The first bar graph depicts the number of books borrowed from the library 
+week-wise and the second one depicts the number of books being returned to the library week-wise.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="visualisation.visual.object_declare">
+<code class="descname">object_declare</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#visualisation.visual.object_declare" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function creates an object of the psql class and then return it.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>connection – Object of the psql class.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/visualisation.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+      <div class="relbar-bottom">
+            
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="userlogin.html" title="userlogin module"
+             >previous</a> &nbsp; &nbsp;</li>
+      <li><a href="index.html">LMS_IOT 2019 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="modules.html" >IOTA2</a> &#187;</li> 
+      </ul>
+    </div>
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Yamin Huzaifa,Sanchit Sharma,Deepika Gill &amp; Sarvatra Indoria.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+      <!-- PSphinxTheme -->
+  </body>
+</html>

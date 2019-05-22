@@ -1,10 +1,11 @@
 from psql import dbCon
 from calendar_event import calendar_event
 
+
 class Return:
     def __init__(self, username):
         """Consructor for the Return class
-        
+
         Arguments:
             username {string} -- Its used to intialize the constructor
         """
@@ -12,10 +13,10 @@ class Return:
 
     def checkBID(self, bid):
         """This functions checks if the book id entered by the user exists in the database
-        
+
         Arguments:
             bid {string} -- Book id provided by the user
-        
+
         Returns:
             string -- returns true if the book is found and returns false if the book is not found
         """
@@ -30,10 +31,10 @@ class Return:
             return True
         else:
             return False
-    
+
     def declare_event_object(self):
         """This function creates an object of the calendar_event class and then returns it.
-        
+
         Returns:
             connection -- Object of the calendar_event class.
         """
@@ -59,7 +60,7 @@ class Return:
         if len(books) > 0:
             print("| Bookid | Title |")
             for r in books:
-                print(str(r[0])+" | "+r[1])
+                print(str(r[0]) + " | " + r[1])
 
             allBooks = ("""SELECT * FROM bookborrowed """)
             print("Enter Book ID to return")

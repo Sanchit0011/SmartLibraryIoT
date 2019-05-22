@@ -4,11 +4,16 @@ import time
 
 
 class client():
-"""logout from master pie
-"""
-    def clPost(self, ip):
+    """logout from master pie
+    """
+
+
+
+
+
+def clPost(self, ip):
         """send logout message over socket
-        
+
         Arguments:
             ip {String} -- ip address to send logout message
         """

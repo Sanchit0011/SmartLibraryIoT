@@ -1,0 +1,165 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>calendar_event module &#8212; LMS_IOT 2019 documentation</title>
+    <link rel="stylesheet" href="_static/p_sphinx_theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/local_fonts.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/p_sphinx_theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="face_reco module" href="face_reco.html" />
+    <link rel="prev" title="borrowBook module" href="borrowBook.html" /> 
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+      <div class="relbar-top">
+            
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="face_reco.html" title="face_reco module"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="borrowBook.html" title="borrowBook module"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+      <li><a href="index.html">LMS_IOT 2019 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">IOTA2</a> &#187;</li> 
+      </ul>
+    </div>
+      </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-calendar_event">
+<span id="calendar-event-module"></span><h1>calendar_event module<a class="headerlink" href="#module-calendar_event" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="calendar_event.calendar_event">
+<em class="property">class </em><code class="descclassname">calendar_event.</code><code class="descname">calendar_event</code><a class="headerlink" href="#calendar_event.calendar_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>The calendar_event class is used to add or delete events for return of books 
+from google calendar, based on whether a book has been borrowed or returned.</p>
+<dl class="attribute">
+<dt id="calendar_event.calendar_event.SCOPES">
+<code class="descname">SCOPES</code><em class="property"> = 'https://www.googleapis.com/auth/calendar'</em><a class="headerlink" href="#calendar_event.calendar_event.SCOPES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="calendar_event.calendar_event.creds">
+<code class="descname">creds</code><em class="property"> = None</em><a class="headerlink" href="#calendar_event.calendar_event.creds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="calendar_event.calendar_event.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><em>book_id</em><span class="sig-paren">)</span><a class="headerlink" href="#calendar_event.calendar_event.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method deletes a google calendar event for the return of a book when the book
+is returned, using the book id to match the event.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>book_id {int} – The id of the book returned</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="calendar_event.calendar_event.insert">
+<code class="descname">insert</code><span class="sig-paren">(</span><em>book_title</em>, <em>book_id</em><span class="sig-paren">)</span><a class="headerlink" href="#calendar_event.calendar_event.insert" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method inserts a new google calendar event for the return of a book whenever 
+a book is borrowed. The event is added one week from the current date.</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>book_title {string} – The title of the book to be specified in return book google calendar event.
+book_id {int} – The id of the book to be specified in return book google calendar event.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="calendar_event.calendar_event.store">
+<code class="descname">store</code><em class="property"> = &lt;oauth2client.file.Storage object&gt;</em><a class="headerlink" href="#calendar_event.calendar_event.store" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/calendar_event.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+      <div class="relbar-bottom">
+            
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="face_reco.html" title="face_reco module"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="borrowBook.html" title="borrowBook module"
+             >previous</a> &nbsp; &nbsp;</li>
+      <li><a href="index.html">LMS_IOT 2019 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="modules.html" >IOTA2</a> &#187;</li> 
+      </ul>
+    </div>
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Yamin Huzaifa,Sanchit Sharma,Deepika Gill &amp; Sarvatra Indoria.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+      <!-- PSphinxTheme -->
+  </body>
+</html>

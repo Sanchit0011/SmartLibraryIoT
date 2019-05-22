@@ -1,0 +1,307 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>addBook module &#8212; LMS_IOT 2019 documentation</title>
+    <link rel="stylesheet" href="_static/p_sphinx_theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/local_fonts.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/p_sphinx_theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="borrowBook module" href="borrowBook.html" />
+    <link rel="prev" title="IOTA2" href="modules.html" /> 
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+      <div class="relbar-top">
+            
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="borrowBook.html" title="borrowBook module"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="modules.html" title="IOTA2"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+      <li><a href="index.html">LMS_IOT 2019 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">IOTA2</a> &#187;</li> 
+      </ul>
+    </div>
+      </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-addBook">
+<span id="addbook-module"></span><h1>addBook module<a class="headerlink" href="#module-addBook" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="addBook.ItemTable">
+<em class="property">class </em><code class="descclassname">addBook.</code><code class="descname">ItemTable</code><span class="sig-paren">(</span><em>items</em>, <em>classes=None</em>, <em>thead_classes=None</em>, <em>sort_by=None</em>, <em>sort_reverse=False</em>, <em>no_items=None</em>, <em>table_id=None</em>, <em>border=None</em>, <em>html_attrs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#addBook.ItemTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_table.table.Table</span></code></p>
+<p>create html table from dict and create delete button dynamically</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>Table {dictionary} – row col values from query</p>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="addBook.ItemTable.author">
+<code class="descname">author</code><em class="property"> = &lt;flask_table.columns.Col object&gt;</em><a class="headerlink" href="#addBook.ItemTable.author" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="addBook.ItemTable.bookid">
+<code class="descname">bookid</code><em class="property"> = &lt;flask_table.columns.Col object&gt;</em><a class="headerlink" href="#addBook.ItemTable.bookid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="addBook.ItemTable.classes">
+<code class="descname">classes</code><em class="property"> = ['table', 'table-hover', 'table-condensed']</em><a class="headerlink" href="#addBook.ItemTable.classes" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="addBook.ItemTable.name">
+<code class="descname">name</code><em class="property"> = &lt;flask_table.columns.LinkCol object&gt;</em><a class="headerlink" href="#addBook.ItemTable.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="addBook.ItemTable.publisheddate">
+<code class="descname">publisheddate</code><em class="property"> = &lt;flask_table.columns.Col object&gt;</em><a class="headerlink" href="#addBook.ItemTable.publisheddate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="addBook.ItemTable.table_id">
+<code class="descname">table_id</code><em class="property"> = 'sort'</em><a class="headerlink" href="#addBook.ItemTable.table_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="addBook.ItemTable.title">
+<code class="descname">title</code><em class="property"> = &lt;flask_table.columns.Col object&gt;</em><a class="headerlink" href="#addBook.ItemTable.title" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="addBook.LoginForm">
+<em class="property">class </em><code class="descclassname">addBook.</code><code class="descname">LoginForm</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#addBook.LoginForm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>Match login creds with admin creds</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>FlaskForm {FlaskForm} – Flask form to check fields and validations</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValidationError: to check username
+ValidationError: to check password</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="addBook.LoginForm.UnameChk">
+<code class="descname">UnameChk</code><span class="sig-paren">(</span><em>field</em><span class="sig-paren">)</span><a class="headerlink" href="#addBook.LoginForm.UnameChk" title="Permalink to this definition">¶</a></dt>
+<dd><p>username check</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>form {flask form} – flask form submitted by user
+field {flask form field} – field to check user input</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValidationError: if username doesnt match</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="addBook.LoginForm.passChk">
+<code class="descname">passChk</code><span class="sig-paren">(</span><em>field</em><span class="sig-paren">)</span><a class="headerlink" href="#addBook.LoginForm.passChk" title="Permalink to this definition">¶</a></dt>
+<dd><p>check password</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>form {flask form} – flask form submitted by user
+field {flask form field} – field to check user input</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValidationError: if password incorrect</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="addBook.LoginForm.password">
+<code class="descname">password</code><em class="property"> = &lt;UnboundField(PasswordField, ('Password',), {'validators': [&lt;wtforms.validators.InputRequired object&gt;, &lt;function LoginForm.passChk&gt;]})&gt;</em><a class="headerlink" href="#addBook.LoginForm.password" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="addBook.LoginForm.username">
+<code class="descname">username</code><em class="property"> = &lt;UnboundField(StringField, ('Username',), {'validators': [&lt;wtforms.validators.InputRequired object&gt;, &lt;function LoginForm.UnameChk&gt;]})&gt;</em><a class="headerlink" href="#addBook.LoginForm.username" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="addBook.NewBook">
+<em class="property">class </em><code class="descclassname">addBook.</code><code class="descname">NewBook</code><span class="sig-paren">(</span><em>formdata=&lt;object object&gt;</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#addBook.NewBook" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">flask_wtf.form.FlaskForm</span></code></p>
+<p>validate title and author fields to be filled</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>FlaskForm {FlaskForm} – form submitted by user</p>
+</dd>
+</dl>
+<dl class="attribute">
+<dt id="addBook.NewBook.author">
+<code class="descname">author</code><em class="property"> = &lt;UnboundField(StringField, ('Author',), {'validators': [&lt;wtforms.validators.InputRequired object&gt;]})&gt;</em><a class="headerlink" href="#addBook.NewBook.author" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="addBook.NewBook.publisheddate">
+<code class="descname">publisheddate</code><em class="property"> = &lt;UnboundField(DateField, ('Published Date\n        ',), {'validators': [&lt;wtforms.validators.InputRequired object&gt;], 'format': '%Y-%m-%d'})&gt;</em><a class="headerlink" href="#addBook.NewBook.publisheddate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="addBook.NewBook.title">
+<code class="descname">title</code><em class="property"> = &lt;UnboundField(StringField, ('Title',), {'validators': [&lt;wtforms.validators.InputRequired object&gt;]})&gt;</em><a class="headerlink" href="#addBook.NewBook.title" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="addBook.addBook">
+<code class="descclassname">addBook.</code><code class="descname">addBook</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#addBook.addBook" title="Permalink to this definition">¶</a></dt>
+<dd><p>add book to database with name author and publush date</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>template – addBook page template with appropriate error message</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="addBook.add_header">
+<code class="descclassname">addBook.</code><code class="descname">add_header</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="headerlink" href="#addBook.add_header" title="Permalink to this definition">¶</a></dt>
+<dd><p>add header in request toprevent browser for caching pages due to security reasons</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>response {http response} – response going to browser</p>
+</dd>
+<dt>Returns:</dt><dd><p>http response – with added no cache flag</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="addBook.delF">
+<code class="descclassname">addBook.</code><code class="descname">delF</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="headerlink" href="#addBook.delF" title="Permalink to this definition">¶</a></dt>
+<dd><p>delete book</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>id {int} – book ID to delete</p>
+</dd>
+<dt>Returns:</dt><dd><p>login page – if user try to do url manipulation without login
+addBook – returns addBook page with appropriate info message</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="addBook.index">
+<code class="descclassname">addBook.</code><code class="descname">index</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#addBook.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>shows the login page if user is not logged in or has logged out</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>login.html – login page if invalid creds
+addbook url – addBook url if login success</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="addBook.logMeOut">
+<code class="descclassname">addBook.</code><code class="descname">logMeOut</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#addBook.logMeOut" title="Permalink to this definition">¶</a></dt>
+<dd><p>logout admin from app to login page</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>html – login page</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="addBook.sendVis">
+<code class="descclassname">addBook.</code><code class="descname">sendVis</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#addBook.sendVis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run alaytics and generate visualization from database</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>file – zip file containing graphs</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/addBook.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+      <div class="relbar-bottom">
+            
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="borrowBook.html" title="borrowBook module"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="modules.html" title="IOTA2"
+             >previous</a> &nbsp; &nbsp;</li>
+      <li><a href="index.html">LMS_IOT 2019 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="modules.html" >IOTA2</a> &#187;</li> 
+      </ul>
+    </div>
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Yamin Huzaifa,Sanchit Sharma,Deepika Gill &amp; Sarvatra Indoria.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+      <!-- PSphinxTheme -->
+  </body>
+</html>

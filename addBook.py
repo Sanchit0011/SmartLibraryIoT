@@ -8,7 +8,7 @@ from wtforms.validators import InputRequired
 from flask_bootstrap import Bootstrap
 from wtforms.fields.html5 import DateField
 from flask_table import Table, Col, LinkCol
-from visualisation import visual
+from visualisation import visual       
 import zipfile
 import os
 
@@ -182,22 +182,25 @@ def sendVis():
         file -- zip file containing graphs
     """
     if 'username' in session:
-        if os.path.exists("Visual.zip"):
-            os.remove("Visual.zip")
-        if os.path.exists("static/day_wise.pdf"):
-            os.remove("static/day_wise.pdf")
-        if os.path.exists("static/week_wise.pdf"):
-            os.remove("static/week_wise.pdf")
-        if os.path.exists("static/popularbooks.pdf"):
-            os.remove("static/popularbooks.pdf")
-        vis = visual()
-        vis.create_day_graph()
-        vis.create_week_graph()
-        vis.create_popularbook_graph()
-        zipfile.ZipFile('Visual.zip', mode='w').write("static/day_wise.pdf")
-        zipfile.ZipFile('Visual.zip', mode='a').write("static/week_wise.pdf")
-        zipfile.ZipFile('Visual.zip', mode='a').write("static/popularbooks.pdf")
-        return send_file("Visual.zip", as_attachment=True)
+        try:
+            if os.path.exists("Visual.zip"):
+                os.remove("Visual.zip")
+            if os.path.exists("static/day_wise.pdf"):
+                os.remove("static/day_wise.pdf")
+            if os.path.exists("static/week_wise.pdf"):
+                os.remove("static/week_wise.pdf")
+            if os.path.exists("static/popularbooks.pdf"):
+                os.remove("static/popularbooks.pdf")
+            vis = visual()
+            vis.create_day_graph()
+            vis.create_week_graph()
+            vis.create_popularbook_graph()
+            zipfile.ZipFile('Visual.zip', mode='w').write("static/day_wise.pdf")
+            zipfile.ZipFile('Visual.zip', mode='a').write("static/week_wise.pdf")
+            zipfile.ZipFile('Visual.zip', mode='a').write("static/popularbooks.pdf")
+            return send_file("Visual.zip", as_attachment=True)
+        except:
+            print("File error")
     else:
         form = LoginForm()
         return render_template('login.html', form=form)

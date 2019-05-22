@@ -1,0 +1,154 @@
+
+
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>returnBook module &#8212; LMS_IOT 2019 documentation</title>
+    <link rel="stylesheet" href="_static/p_sphinx_theme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/local_fonts.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script type="text/javascript" src="_static/jquery.cookie.js"></script>
+    <script type="text/javascript" src="_static/p_sphinx_theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="userlogin module" href="userlogin.html" />
+    <link rel="prev" title="psql module" href="psql.html" /> 
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head><body>
+      <div class="relbar-top">
+            
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="userlogin.html" title="userlogin module"
+             accesskey="N">next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="psql.html" title="psql module"
+             accesskey="P">previous</a> &nbsp; &nbsp;</li>
+      <li><a href="index.html">LMS_IOT 2019 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="modules.html" accesskey="U">IOTA2</a> &#187;</li> 
+      </ul>
+    </div>
+      </div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-returnBook">
+<span id="returnbook-module"></span><h1>returnBook module<a class="headerlink" href="#module-returnBook" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="returnBook.Return">
+<em class="property">class </em><code class="descclassname">returnBook.</code><code class="descname">Return</code><span class="sig-paren">(</span><em>username</em><span class="sig-paren">)</span><a class="headerlink" href="#returnBook.Return" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="returnBook.Return.checkBID">
+<code class="descname">checkBID</code><span class="sig-paren">(</span><em>bid</em><span class="sig-paren">)</span><a class="headerlink" href="#returnBook.Return.checkBID" title="Permalink to this definition">¶</a></dt>
+<dd><p>This functions checks if the book id entered by the user exists in the database</p>
+<dl class="simple">
+<dt>Arguments:</dt><dd><p>bid {string} – Book id provided by the user</p>
+</dd>
+<dt>Returns:</dt><dd><p>string – returns true if the book is found and returns false if the book is not found</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="returnBook.Return.declare_event_object">
+<code class="descname">declare_event_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#returnBook.Return.declare_event_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function creates an object of the calendar_event class and then returns it.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>connection – Object of the calendar_event class.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="returnBook.Return.returnBook">
+<code class="descname">returnBook</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#returnBook.Return.returnBook" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Return Book method checks if the book id entered by the user has status as borrowed.
+If yes, the book is returned, otherwise it gives an error</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/returnBook.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+      <div class="relbar-bottom">
+            
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="userlogin.html" title="userlogin module"
+             >next</a> &nbsp; &nbsp;</li>
+        <li class="right" >
+          <a href="psql.html" title="psql module"
+             >previous</a> &nbsp; &nbsp;</li>
+      <li><a href="index.html">LMS_IOT 2019 documentation</a> &#187;</li>
+
+          <li class="nav-item nav-item-1"><a href="modules.html" >IOTA2</a> &#187;</li> 
+      </ul>
+    </div>
+      </div>
+
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Yamin Huzaifa,Sanchit Sharma,Deepika Gill &amp; Sarvatra Indoria.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+      <!-- PSphinxTheme -->
+  </body>
+</html>

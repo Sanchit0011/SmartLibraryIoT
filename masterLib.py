@@ -7,11 +7,12 @@ from returnBook import Return
 
 
 class server():
-    """class to recieve connection from RP through socket and provide library functions
+    """class to receive connection from RP through socket and provide library functions
     """
+
     def checkBID(self, bid):
         """check if book ID is in list of books
-        
+
         Arguments:
             bid {int} -- book id to check
         """
@@ -98,10 +99,11 @@ class server():
                     book.bookid, book.title, book.author, book.publisheddate
                     from book
                     where title like %s """)
-                    rows = dbCon().selectQ(q, "%"+bookTitle+"%")
+                    rows = dbCon().selectQ(q, "%" + bookTitle + "%")
                     print("| Bookid | Title | Author | Published Date |")
                     for r in rows:
-                        print(str(r[0])+" | "+r[1]+" | "+r[2]+" | "+str(r[3]))
+                        print(str(r[0]) + " | " + r[1] +
+                              " | " + r[2] + " | " + str(r[3]))
                 elif(opt == '2'):
                     print("Enter Book ID to borrow")
                     bookID = input()
@@ -112,8 +114,8 @@ class server():
                     else:
                         print("Invalid book ID")
                 elif(opt == '3'):
-                        p = Return(uid)
-                        p.returnBook()
+                    p = Return(uid)
+                    p.returnBook()
                 elif(opt == '4'):
                     client().clPost(addr[0])
                     print(fname + " " + lname + " has successfuly logged out.")
@@ -124,4 +126,6 @@ class server():
                     uid = -1
                     print()
                     break
+
+
 server().servListen()
