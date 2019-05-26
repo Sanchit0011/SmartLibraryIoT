@@ -37,7 +37,6 @@ class userlogin:
         register, log in to the system or exit the menu.
         If users choose to register, they will be asked to fill in a valid
         username, firstname, lastname, email and password to create an account.
-
         If users choose to log in, they will be asked to specify the login method they 
         want to use. 
         
@@ -49,7 +48,6 @@ class userlogin:
         in order to access the system. Access will only be granted if username and password 
         are correct. If login is successful, a success message along with the username is sent 
         to the master pi.
-
         If users choose to exit, they will exit the system."""
 
         while(1):
@@ -63,6 +61,17 @@ class userlogin:
             print('3. exit')
             print()
 
+            # Created userdetails table in database
+            conn = self.create_conn()
+            cur = conn.cursor()
+            conn.execute('''CREATE TABLE IF NOT EXISTS USERDETAILS
+            ( USERID TEXT PRIMARY KEY,
+            PASSWORD TEXT NOT NULL,
+            FIRSTNAME TEXT NOT NULL,
+            LASTNAME TEXT NOT NULL,
+            EMAIL TEXT NOT NULL
+            );''')
+
             # Took user option as input
             options = input()
             
@@ -73,17 +82,6 @@ class userlogin:
             
             # If option 1 then register new user
             elif(options == '1'):
-
-                # Created userdetails table in database
-                conn = self.create_conn()
-                cur = conn.cursor()
-                conn.execute('''CREATE TABLE IF NOT EXISTS USERDETAILS
-                ( USERID TEXT PRIMARY KEY,
-                PASSWORD TEXT NOT NULL,
-                FIRSTNAME TEXT NOT NULL,
-                LASTNAME TEXT NOT NULL,
-                EMAIL TEXT NOT NULL
-                );''')
 
                 # Input and validate username
                 flag = True
@@ -362,6 +360,6 @@ class userlogin:
                 sys.exit(0)
 
 
-Created loginMenu object and called createloginMenu()
+# Created loginMenu object and called createloginMenu()
 ul = userlogin()
 ul.createloginMenu()
