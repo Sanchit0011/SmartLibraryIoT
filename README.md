@@ -2,8 +2,8 @@
 Platform- python3 
 hardware- 2 X Raspberry pie, camera
 ## File details:
-In total 10 files
--userLogin.py
+In total 10 python files
+- userLogin.py
 - masterLib.py
 - face_reco.py
 - psql.py
@@ -14,13 +14,14 @@ In total 10 files
 - logout_client.py
 - visualisation.py
 ## Libraries Used:
-UI:flask,flask_bootstrap,Flask_WTF,flask_table,zipfile,
+UI:flask,flask_bootstrap,flask_WTF,flask_table,zipfile,
 facial recognition: imutils, face_recognition, argparse,pickle, time and cv2
-masterlib: socket and jason
+masterlib: socket and json
 calender_event:datetime, googleapiclient, httplib2 and oauth2client 
 userlogin: sqlite3, passlib
 Database: GCP(Gcloud)- postgres
 documentation- Sphinx
+HTML format documentation: Documentation/_build/html/index.html
 ## References:
 GoogleAPi- https://developers.google.com/calendar/quickstart/python
 face_recog : https://www.pyimagesearch.com/2018/06/18/face-recognition-with-opencv-python-and-deep-learning/
