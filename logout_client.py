@@ -6,12 +6,8 @@ import time
 class client():
     """logout from master pie
     """
-
-
-
-
-
-def clPost(self, ip):
+    
+    def clPost(self, ip):
         """send logout message over socket
 
         Arguments:
