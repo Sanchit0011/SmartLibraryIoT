@@ -4,7 +4,7 @@ import time
 
 
 class client():
-    """logout from master pie
+    """logout from master pi
     """
     
     def clPost(self, ip):
